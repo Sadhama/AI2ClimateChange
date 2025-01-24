@@ -11,7 +11,7 @@ import SwiftUI
 struct AI2ClimateChangeApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            LoadingView()
         }
     }
 }
