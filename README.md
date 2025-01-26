@@ -1,6 +1,6 @@
 Swift Project on AI x Sustainability/Environment 🌎 🌍 🌏
 
-Note: The original app name was AI2ClimateChange, however I thought that was a bit of a mouthful and changed it to EcoMind AI.
+Note: The original app name was AI2ClimateChange, however I thought that was a bit of a mouthful and changed it to EcoMind AI. Also, Kokila is the owner of the Mac I am using, therefore the initial comments have their name on it. However I, Sadhana Gangadharan, am the one who created the app.
 
 
 As per challenge guidelines (however a little beyond them), 
