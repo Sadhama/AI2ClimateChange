@@ -23,7 +23,7 @@ struct SolutionsView: View {
                             CourseModule(
                                 title: benefits[index].title,
                                 description: benefits[index].description,
-                                imageName: "homebg"
+                                imageName: benefits[index].imageName
                             )
                         }
                     }
@@ -39,15 +39,26 @@ struct SolutionsView: View {
                         ScrollView {
                             VStack(alignment: .leading, spacing: 10) {
                                 ForEach(messages, id: \.self) { message in
-                                    Text(message)
-                                        .padding()
-                                        .background(
-                                            message.contains("You:")
-                                                ? Color.blue.opacity(0.2)
-                                                : Color.gray.opacity(0.2)
-                                        )
-                                        .cornerRadius(10)
-                                        .frame(maxWidth: .infinity, alignment: message.contains("You:") ? .trailing : .leading)
+                                    if message.contains("You:") {
+                                        Text(message)
+                                            .padding()
+                                            .background(Color.blue.opacity(0.2))
+                                            .cornerRadius(10)
+                                            .frame(maxWidth: .infinity, alignment: .trailing)
+                                    } else {
+                                        HStack(alignment: .top, spacing: 10) {
+                                            Image("EarthAIIcon")
+                                                .resizable()
+                                                .scaledToFit()
+                                                .frame(width: 35.0, height: 35.0)
+                                                .clipShape(Circle())
+                                            Text(message)
+                                                .padding()
+                                                .background(Color.gray.opacity(0.2))
+                                                .cornerRadius(10)
+                                                .frame(maxWidth: .infinity, alignment: .leading)
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -131,7 +142,8 @@ struct SolutionsView: View {
                 }
             }
         }
-
+        .toolbarBackground(Color.clear, for: .navigationBar)
+        .toolbarBackground(.hidden, for: .navigationBar)
 
         .background(
             LinearGradient(
@@ -164,7 +176,7 @@ struct SolutionsView: View {
     }
 
     func fetchGPT2Response(prompt: String, completion: @escaping (String) -> Void) {
-        let apiKey = "###########"
+        let apiKey = "xxxxxxxxxxxxxplaceholder"
         let endpoint = "https://api-inference.huggingface.co/models/bert-large-uncased-whole-word-masking-finetuned-squad"
 
         guard let url = URL(string: endpoint) else {
@@ -190,26 +202,16 @@ struct SolutionsView: View {
                 return
             }
 
-            // Debugging: Log the entire response
-            if let httpResponse = response as? HTTPURLResponse {
-                print("Status code: \(httpResponse.statusCode)")
-            }
-
             do {
-                if let response = try? JSONSerialization.jsonObject(with: data) as? [String: Any] {
-                    print("Full Response: \(response)") // Log the entire response for debugging
-                    if let generatedText = response["generated_text"] as? String {
-                        completion(generatedText) // Extract and return the text as expected
-                    } else {
-                        completion("No 'generated_text' field found. Response: \(response)") // Handle the case if field is missing
-                    }
+                if let response = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+                   let generatedText = response["generated_text"] as? String {
+                    completion(generatedText)
                 } else {
-                    completion("Failed to parse response. Raw data: \(String(data: data, encoding: .utf8) ?? "N/A")")
+                    completion("Failed to parse response.")
                 }
             }
         }.resume()
     }
-
 }
 
 struct CourseModule: View {
@@ -246,14 +248,15 @@ struct CourseModule: View {
 struct Benefit {
     let title: String
     let description: String
+    let imageName: String
 }
 
 let benefits = [
-    Benefit(title: "Predictive Analysis             ", description: "AI models predict climate patterns and disasters."),
-    Benefit(title: "Energy Efficiency               ", description: "Smart algorithms optimize energy usage."),
-    Benefit(title: "Reforestation                      ", description: "AI-powered drones plant trees."),
-    Benefit(title: "Carbon Capture                         ", description: "Machine learning enhances carbon capture."),
-    Benefit(title: "Sustainable Agriculture               ", description: "AI systems reduce waste and improve yield.")
+    Benefit(title: "Predictive Analysis        ", description: "AI models predict climate patterns and disasters.", imageName: "PredictiveAnalysis"),
+    Benefit(title: "Energy Efficiency                    ", description: "Smart algorithms optimize energy usage.", imageName: "Energy Efficiency"),
+    Benefit(title: "Reforestation                          ", description: "AI-powered drones plant trees.", imageName: "Reforestation"),
+    Benefit(title: "Carbon Capture                         ", description: "Machine learning enhances carbon capture.", imageName: "CarbonCapture"),
+    Benefit(title: "Sustainable Agriculture                       ", description: "AI systems reduce waste and improve yield.", imageName: "SustainableAgriculture")
 ]
 
 struct SolutionsView_Previews: PreviewProvider {

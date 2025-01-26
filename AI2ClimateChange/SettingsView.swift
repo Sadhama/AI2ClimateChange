@@ -4,7 +4,7 @@ struct SettingsView: View {
     @Binding var isDarkMode: Bool
 
     var body: some View {
-        VStack(spacing: 20) {
+        VStack(alignment: .center, spacing: 20) {
             // Dark Mode Toggle
             Toggle(isOn: $isDarkMode) {
                 Text("Dark Mode")
@@ -14,7 +14,7 @@ struct SettingsView: View {
 
             Spacer()
 
-            // Globe Image Placeholder
+            // Logo
             VStack {
                 LinearGradient(
                     gradient: Gradient(colors: [Color.blue, Color.green]),
@@ -24,7 +24,7 @@ struct SettingsView: View {
                 .frame(height: 200)
                 .cornerRadius(15)
                 .overlay(
-                    Image("earthLoad") // Replace with your globe image
+                    Image("earthLoad")
                         .resizable()
                         .scaledToFit()
                         .frame(height: 150)
@@ -33,6 +33,12 @@ struct SettingsView: View {
             .padding()
 
             Spacer()
+            
+            Text("Made with ❤️ by Sadhana Gangadharan for KWK x Delloite Sustainability Challenge")
+                .font(.footnote)
+                .fontWeight(.bold)
+                .multilineTextAlignment(.center)
+            
         }
         .padding()
         .background(isDarkMode ? Color.black.edgesIgnoringSafeArea(.all) : Color.white.edgesIgnoringSafeArea(.all))

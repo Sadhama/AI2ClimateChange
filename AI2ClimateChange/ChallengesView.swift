@@ -5,41 +5,34 @@
 //  Created by kokila on 12/30/24.
 //
 import SwiftUI
-
 struct ChallengesView: View {
     @State private var isDarkMode = false
     
-   
     @Environment(\.dismiss) private var dismiss
-
-    let challenges: [(title: String, fact: String, link: String)] = [
-        ("AI Water Usage                  ", "\"AI consumes 1.8 – 12 litres of water for each kWh of energy\"", "https://oecd.ai/en/wonk/how-much-water-does-ai-consume"),
-        ("Energy Consumption", "\"AI models require massive energy, leading to increased carbon footprints.\"", "https://example.com/ai-energy"),
-        ("E-Waste                                           ", "\"Decommissioned AI hardware contributes significantly to e-waste.\"", "https://example.com/ai-ewaste"),
-        ("Data Centers                                      ", "\"Data centers for AI consume 2% of global electricity annually.\"", "https://example.com/ai-data-centers"),
-        ("Natural Resource Consumption                            ", "\"Artificial Intelligence devices often require significant amounts of metals to make hardware\"", "https://example.com/ai-data-centers")
+    let challenges: [(title: String, fact: String, link: String, imageName: String)] = [
+        ("AI Water Usage                  ", "\"AI consumes 1.8 – 12 litres of water for each kWh of energy\"", "https://oecd.ai/en/wonk/how-much-water-does-ai-consume", "Water"),
+        ("Energy Consumption", "\"AI models require massive energy, leading to increased carbon footprints.\"", "https://news.climate.columbia.edu/2023/06/09/ais-growing-carbon-footprint/", "Energy"),
+        ("E-Waste                                           ", "\"Decommissioned AI hardware contributes significantly to e-waste.\"", "https://www.technologyreview.com/2024/10/28/1106316/ai-e-waste/", "EWaste"),
+        ("Data Centers                                      ", "\"Data centers for AI consume 2% of global electricity annually.\"", "https://news.mit.edu/2025/multifaceted-challenge-of-powering-ai-0121", "DataCenters"),
+        ("Natural Resource Consumption                                             ", "\"Artificial Intelligence devices often require significant amounts of metals to make hardware\"", "https://environment.yale.edu/news/article/can-we-mitigate-ais-environmental-impacts#:~:text=Besides%20its%20energy%20usage%2C%20AI,gold%2C%20and%20many%20other%20metals.", "Metals")
     ]
-
     var body: some View {
-        NavigationView {
             VStack(spacing: 15) {
                 Text("Challenges")
                     .font(.largeTitle)
                     .fontWeight(.bold)
-
                 ScrollView {
                     VStack(spacing: 20) {
                         ForEach(challenges, id: \.title) { challenge in
                             Link(destination: URL(string: challenge.link)!) {
                                 HStack {
-                                    Image("homebg")
+                                    Image(challenge.imageName)  // Displaying unique image for each challenge
                                         .resizable()
                                         .scaledToFill()
                                         .frame(width: 100, height: 100)
                                         .clipped()
                                         .cornerRadius(15)
                                         .padding()
-
                                     VStack(alignment: .leading, spacing: 10) {
                                         Text(challenge.title)
                                             .font(.headline)
@@ -67,7 +60,19 @@ struct ChallengesView: View {
                     }
                     .padding()
                 }
-
+                .navigationBarBackButtonHidden(true)
+                    .toolbar {
+                        ToolbarItem(placement: .navigationBarLeading) {
+                            Button(action: {
+                                dismiss() // Navigate back to the previous view
+                        }) {
+                                Image("earthLoad")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 24, height: 24)
+                            }
+                        }
+                    }
                 HStack {
                     Spacer()
                     NavigationLink(destination: ContentView()) {
@@ -100,19 +105,6 @@ struct ChallengesView: View {
                 .cornerRadius(20)
                 .padding(.horizontal, 20)
             }
-            .navigationBarBackButtonHidden(true)
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        Button(action: {
-                            dismiss() // Navigate back to the previous view
-                    }) {
-                            Image("earthLoad")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 24, height: 24)
-                        }
-                    }
-                }
             .background(
                 LinearGradient(
                     gradient: Gradient(colors: [Color.white, Color.blue.opacity(0.1)]),
@@ -121,10 +113,9 @@ struct ChallengesView: View {
                 )
                 .edgesIgnoringSafeArea(.all)
             )
-        }
     }
 }
-
 #Preview {
     ChallengesView()
 }
+
