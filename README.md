@@ -1,4 +1,4 @@
-Swift Project on AI x Sustainability/Environment
+Swift Project on AI x Sustainability/Environment 🌎 🌍 🌏
 
 Note: The original app name was AI2ClimateChange, however I thought that was a bit of a mouthful and changed it to EcoMind AI.
 
