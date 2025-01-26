@@ -34,7 +34,7 @@ struct SettingsView: View {
 
             Spacer()
             
-            Text("Made with ❤️ by Sadhana Gangadharan for KWK x Delloite Sustainability Challenge")
+            Text("Made with ❤️ by Sadhana Gangadharan for KWK x Deloitte Sustainability Challenge")
                 .font(.footnote)
                 .fontWeight(.bold)
                 .multilineTextAlignment(.center)
